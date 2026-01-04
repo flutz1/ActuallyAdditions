@@ -54,7 +54,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.Locale;
-import java.util.Optional;
 
 public class CommonEvents {
     @SubscribeEvent
