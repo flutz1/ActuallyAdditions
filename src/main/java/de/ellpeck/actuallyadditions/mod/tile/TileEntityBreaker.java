@@ -112,11 +112,12 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
 
         if (!this.isPlacer && blockToBreak != Blocks.AIR && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
             List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerLevel) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
-            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
-            fake.getInventory().items.set(fake.getInventory().selected, Items.NETHERITE_PICKAXE.getDefaultInstance());
-            if (stateToBreak.canHarvestBlock(this.level, breakCoords, fake)) { //TODO might double check this is right mikey
+            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, this.level, breakCoords);
+
+            if (chance > 0 && this.level.random.nextFloat() <= chance) {
                 if (StackUtil.canAddAll(this.inv, drops, false)) {
-                    this.level.destroyBlock(breakCoords, false);
+                    this.level.levelEvent(2001, breakCoords, Block.getId(this.level.getBlockState(breakCoords)));
+                    this.level.setBlockAndUpdate(breakCoords, Blocks.AIR.defaultBlockState());
                     StackUtil.addAll(this.inv, drops, false);
                     this.setChanged();
                 }
