@@ -37,6 +37,19 @@ public class SlotItemHandlerUnconditioned extends SlotItemHandler {
         return remainder.isEmpty() || remainder.getCount() < stack.getCount();
     }
 
+    public boolean hasItemInOtherSlots(ItemStack stack) {
+        // Check every slot except the current one
+        for (int i = 0; i < this.inv.getSlots(); i++) {
+            if (i != this.getSlotIndex()) {
+                ItemStack slotStack = this.inv.getStackInSlot(i);
+                if (!slotStack.isEmpty() && ItemStack.isSameItem(slotStack, stack)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Helper fnct to get the stack in the slot.
      */

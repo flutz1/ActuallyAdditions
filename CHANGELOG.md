@@ -1,3 +1,14 @@
+# 1.3.24+mc1.21.1
+* Mark coffee item as non-repairable
+* Rework drill screen
+  * You can no longer insert a higher tier upgrade without having the lower tier installed (like intended)
+  * You can no longer remove the lower tier upgrade while having a higher tier still installed
+  * You can no longer install duplicate upgrades
+
+# 1.3.23+mc1.21.1
+* PR #1515 - Fix Auto-breaker not being able to break snow
+* PR #1514 - Fix min build height for the Vertical Digger
+
 # 1.3.22+mc1.21.1
 * PR #1508 - Fix the alignment of the Atomic Reconstructor related JEI categories
 * Change the redstone output of the Feeder block. It's now based on the amount of animals nearby in relation to the max amount it can feed

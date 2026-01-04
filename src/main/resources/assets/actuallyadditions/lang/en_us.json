@@ -446,6 +446,9 @@
   "tooltip.actuallyadditions.coal_generator_stats": "Generates %d CF (%d CF/t for %d ticks)",
   "tooltip.actuallyadditions.placer_augment": "Placing blocks from hotbar slot %d",
   "tooltip.actuallyadditions.drill.augments": "Installed Augments: %s",
+  "tooltip.actuallyadditions.drill.missing_tier": "You need the previous tier to install this augment!",
+  "tooltip.actuallyadditions.drill.remove_highest": "You need to remove highest tier augments first!",
+  "tooltip.actuallyadditions.drill.already_installed": "This augment is already installed!",
   "_comment": "Gui Information",
   "info.actuallyadditions.gui.animals": "Animals",
   "info.actuallyadditions.gui.enoughToBreed": "Enough to breed!",
@@ -1042,5 +1045,6 @@
   "actuallyadditions.configuration.machineSettings": "Machine Settings",
   "actuallyadditions.configuration.tinyCoal": "Tiny Coal",
   "actuallyadditions.configuration.noColoredItemNames": "No Colored Item Names",
-  "actuallyadditions.configuration.verticalDiggerExtraWhitelist": "Vertical Digger Extra Whitelist"
+  "actuallyadditions.configuration.verticalDiggerExtraWhitelist": "Vertical Digger Extra Whitelist",
+  "actuallyadditions.configuration.generateRice": "Generate Rice"
 }

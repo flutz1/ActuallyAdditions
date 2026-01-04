@@ -52,7 +52,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
     public boolean onlyMineOres;
     public int checkX;
-    public int checkY = -1;
+    public int checkY;
     public int checkZ;
     private int oldEnergy;
     private int oldCheckX;
@@ -100,15 +100,16 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             tile.serverTick();
 
             if (!tile.isRedstonePowered && tile.ticksElapsed % 5 == 0) {
-                if (tile.checkY != 0) {
+                int minHeight = level.getMinBuildHeight();
+                if (tile.checkY != minHeight) {
                     int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, level, pos);
-                    if (tile.checkY < 0) {
+                    if (tile.checkY < minHeight) {
                         tile.checkY = tile.worldPosition.getY() - 1;
                         tile.checkX = -range;
                         tile.checkZ = -range;
                     }
 
-                    if (tile.checkY > 0) {
+                    if (tile.checkY > minHeight) {
                         if (tile.mine()) {
                             tile.checkX++;
                             if (tile.checkX > range) {
@@ -225,7 +226,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             this.sendUpdate();
         } else if (buttonID == 1) {
             this.checkX = 0;
-            this.checkY = -1;
+            this.checkY = player.level().getMinBuildHeight() - 1;
             this.checkZ = 0;
         }
     }

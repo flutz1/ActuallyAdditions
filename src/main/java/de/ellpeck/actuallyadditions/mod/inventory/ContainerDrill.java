@@ -12,10 +12,13 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -44,7 +47,51 @@ public class ContainerDrill extends AbstractContainerMenu {
             this.addSlot(new SlotItemHandlerUnconditioned(this.drillInventory, i, 44 + i * 18, 19) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return stack.getItem() instanceof ItemDrillUpgrade;
+                    if (stack.getItem() instanceof ItemDrillUpgrade upgrade) {
+                        if (this.hasItemInOtherSlots(stack)) {
+                            inventory.player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.drill.already_installed").withStyle(ChatFormatting.RED), true);
+                            return false;
+                        }
+
+                        // Require the previous upgrade to insert higher tier upgrades
+                        boolean mayPlace = switch (upgrade.type) {
+                            case SPEED_II -> this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_SPEED.toStack());
+                            case SPEED_III -> this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_SPEED_II.toStack());
+                            case FORTUNE_II -> this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_FORTUNE.toStack());
+                            case FIVE_BY_FIVE -> this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_THREE_BY_THREE.toStack());
+                            default -> true;
+                        };
+                        if (!mayPlace) {
+                            inventory.player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.drill.missing_tier").withStyle(ChatFormatting.RED), true);
+                        }
+                        return mayPlace;
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean mayPickup(Player player) {
+                    boolean mayPickup = super.mayPickup(player);
+                    if (!mayPickup) {
+                        return false;
+                    }
+                    if (getItem().getItem() instanceof ItemDrillUpgrade upgrade) {
+                        // Prevent removing a lower tier upgrade if a higher tier upgrade is present
+                        mayPickup = switch (upgrade.type) {
+                            case SPEED -> !this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_SPEED_II.toStack()) &&
+                                    !this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_SPEED_III.toStack());
+                            case SPEED_II -> !this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_SPEED_III.toStack());
+                            case FORTUNE -> !this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_FORTUNE_II.toStack());
+                            case THREE_BY_THREE -> !this.hasItemInOtherSlots(ActuallyItems.DRILL_UPGRADE_FIVE_BY_FIVE.toStack());
+                            default -> true;
+                        };
+                        if (!mayPickup) {
+                            player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.drill.remove_highest").withStyle(ChatFormatting.YELLOW), true);
+                        }
+
+                        return mayPickup;
+                    }
+                    return true;
                 }
             });
         }

@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
-import de.ellpeck.actuallyadditions.mod.components.FilterSettingsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
@@ -28,10 +27,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemContainerContents;
 
 import java.util.List;
-import java.util.Objects;
 
 public class FilterSettings {
 
