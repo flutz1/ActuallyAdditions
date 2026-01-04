@@ -1042,5 +1042,6 @@
   "actuallyadditions.configuration.machineSettings": "Machine Settings",
   "actuallyadditions.configuration.tinyCoal": "Tiny Coal",
   "actuallyadditions.configuration.noColoredItemNames": "No Colored Item Names",
-  "actuallyadditions.configuration.verticalDiggerExtraWhitelist": "Vertical Digger Extra Whitelist"
+  "actuallyadditions.configuration.verticalDiggerExtraWhitelist": "Vertical Digger Extra Whitelist",
+  "actuallyadditions.configuration.generateRice": "Generate Rice"
 }
