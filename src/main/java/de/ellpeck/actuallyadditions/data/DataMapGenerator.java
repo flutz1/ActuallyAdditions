@@ -16,7 +16,7 @@ public class DataMapGenerator extends DataMapProvider {
 	}
 
 	@Override
-	protected void gather() {
+	protected void gather(Provider provider) {
 		final float SEEDS = 0.3F;
 		final float CROPS = 0.65F;
 
