@@ -35,7 +35,7 @@ public class ItemCoffee extends ItemBase { //TODO: Do we want to change the satu
     private static final FoodProperties FOOD = new FoodProperties.Builder().nutrition(8).saturationModifier(5.0F).alwaysEdible().build();
 
     public ItemCoffee() {
-        super(ActuallyItems.defaultProps().food(FOOD).durability(3));
+        super(ActuallyItems.defaultProps().food(FOOD).durability(3).setNoRepair());
     }
 
     @Nullable
